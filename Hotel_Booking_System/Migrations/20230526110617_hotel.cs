@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -102,6 +103,56 @@ namespace Hotel_Booking_System.Migrations
                         principalColumn: "Hotel_Id");
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Bookings",
+                columns: table => new
+                {
+                    Book_Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "150, 1"),
+                    Booking_Person_Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Days = table.Column<int>(type: "int", nullable: false),
+                    Phone_Number = table.Column<double>(type: "float", nullable: false),
+                    CheckIn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CheckOut = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Hotel_Id = table.Column<int>(type: "int", nullable: true),
+                    Room_Id = table.Column<int>(type: "int", nullable: true),
+                    Customer_Id = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Bookings", x => x.Book_Id);
+                    table.ForeignKey(
+                        name: "FK_Bookings_Customers_Customer_Id",
+                        column: x => x.Customer_Id,
+                        principalTable: "Customers",
+                        principalColumn: "Customer_Id");
+                    table.ForeignKey(
+                        name: "FK_Bookings_Hotels_Hotel_Id",
+                        column: x => x.Hotel_Id,
+                        principalTable: "Hotels",
+                        principalColumn: "Hotel_Id");
+                    table.ForeignKey(
+                        name: "FK_Bookings_Rooms_Room_Id",
+                        column: x => x.Room_Id,
+                        principalTable: "Rooms",
+                        principalColumn: "Room_Id");
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Bookings_Customer_Id",
+                table: "Bookings",
+                column: "Customer_Id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Bookings_Hotel_Id",
+                table: "Bookings",
+                column: "Hotel_Id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Bookings_Room_Id",
+                table: "Bookings",
+                column: "Room_Id");
+
             migrationBuilder.CreateIndex(
                 name: "IX_Customers_Hotel_Id",
                 table: "Customers",
@@ -122,16 +173,19 @@ namespace Hotel_Booking_System.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Customers");
+                name: "Bookings");
 
             migrationBuilder.DropTable(
                 name: "Employees");
 
             migrationBuilder.DropTable(
-                name: "Rooms");
+                name: "Users");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "Customers");
+
+            migrationBuilder.DropTable(
+                name: "Rooms");
 
             migrationBuilder.DropTable(
                 name: "Hotels");

@@ -1,11 +1,13 @@
 ﻿using Hotel_Booking_System.Models;
 using Hotel_Booking_System.Repositories.Customer_Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
 
 namespace Hotel_Booking_System.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class Customer_Controller : ControllerBase
@@ -42,7 +44,7 @@ namespace Hotel_Booking_System.Controllers
         {
             return cus.DeleteCustomer(id);
         }
-        [HttpGet("filter")]
+        [HttpGet("location")]
         public IEnumerable<Hotel> FilterLocation(string location)
         {
             return cus.FilterLocation(location);

@@ -1,10 +1,12 @@
 ﻿using Hotel_Booking_System.Models;
 using Hotel_Booking_System.Repositories.Hotel_Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hotel_Booking_System.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class Hotel_Controller : ControllerBase

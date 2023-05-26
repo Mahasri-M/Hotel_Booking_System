@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hotel_Booking_System.Migrations
 {
     [DbContext(typeof(HotelContext))]
-    [Migration("20230526092036_hotel")]
+    [Migration("20230526110617_hotel")]
     partial class hotel
     {
         /// <inheritdoc />
@@ -24,6 +24,49 @@ namespace Hotel_Booking_System.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("Hotel_Booking_System.Models.Booking", b =>
+                {
+                    b.Property<int>("Book_Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Book_Id"));
+
+                    b.Property<string>("Booking_Person_Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CheckIn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("CheckOut")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("Customer_Id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Days")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Hotel_Id")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Phone_Number")
+                        .HasColumnType("float");
+
+                    b.Property<int?>("Room_Id")
+                        .HasColumnType("int");
+
+                    b.HasKey("Book_Id");
+
+                    b.HasIndex("Customer_Id");
+
+                    b.HasIndex("Hotel_Id");
+
+                    b.HasIndex("Room_Id");
+
+                    b.ToTable("Bookings");
+                });
 
             modelBuilder.Entity("Hotel_Booking_System.Models.Customer", b =>
                 {
@@ -145,6 +188,27 @@ namespace Hotel_Booking_System.Migrations
                     b.HasKey("User_Id");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("Hotel_Booking_System.Models.Booking", b =>
+                {
+                    b.HasOne("Hotel_Booking_System.Models.Customer", "Customer")
+                        .WithMany()
+                        .HasForeignKey("Customer_Id");
+
+                    b.HasOne("Hotel_Booking_System.Models.Hotel", "Hotel")
+                        .WithMany()
+                        .HasForeignKey("Hotel_Id");
+
+                    b.HasOne("Hotel_Booking_System.Models.Room", "Room")
+                        .WithMany()
+                        .HasForeignKey("Room_Id");
+
+                    b.Navigation("Customer");
+
+                    b.Navigation("Hotel");
+
+                    b.Navigation("Room");
                 });
 
             modelBuilder.Entity("Hotel_Booking_System.Models.Customer", b =>
