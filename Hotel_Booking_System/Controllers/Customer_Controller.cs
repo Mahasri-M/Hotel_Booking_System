@@ -47,6 +47,20 @@ namespace Hotel_Booking_System.Controllers
         {
             return cus.FilterLocation(location);
         }
-
+        [HttpGet("amenities")]
+        public IEnumerable<Hotel> FilterAmenities(string amenities)
+        {
+            return cus.FilterAmenities(amenities);
+        }
+        [HttpGet("pricerange")]
+        public IEnumerable<Hotel> FilterPriceRange(decimal minPrice, decimal maxPrice)
+        {
+            return cus.FilterPriceRange(minPrice, maxPrice);
+        }
+        [HttpGet("availability")]
+        public int GetAvailableRoomCount(int hotel_Id)
+        {
+            return cus.GetAvailableRoomCount(hotel_Id);
+        }
     }
 }

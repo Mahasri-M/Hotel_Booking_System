@@ -5,7 +5,7 @@
 namespace Hotel_Booking_System.Migrations
 {
     /// <inheritdoc />
-    public partial class HotelBooking : Migration
+    public partial class hotel : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -19,7 +19,7 @@ namespace Hotel_Booking_System.Migrations
                     Hotel_Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Hotel_Location = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Amenities = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Price = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Price = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {

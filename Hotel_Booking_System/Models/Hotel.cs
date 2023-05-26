@@ -13,7 +13,7 @@ namespace Hotel_Booking_System.Models
 
         public string? Amenities { get; set; }
 
-        public string? Price { get; set; }
+        public int? Price { get; set; }
 
         public ICollection<Room>? Rooms { get; set; }
         public ICollection<Employee>? Employees { get; set; }

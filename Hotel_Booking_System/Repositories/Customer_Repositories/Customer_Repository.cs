@@ -49,15 +49,76 @@ namespace Hotel_Booking_System.Repositories.Customer_Repositories
         //Filtering location
         public IEnumerable<Hotel> FilterLocation(string location)
         {
-            var location_query = _CustomerContext.Hotels.Include(x => x.Rooms).AsQueryable();
-
-            if (!string.IsNullOrEmpty(location))
+            try
             {
-                location_query = location_query.Where(h => h.Hotel_Location.Contains(location));
+                var location_query = _CustomerContext.Hotels.Include(x => x.Rooms).AsQueryable();
+
+                if (!string.IsNullOrEmpty(location))
+                {
+                    location_query = location_query.Where(h => h.Hotel_Location.Contains(location));
+                }
+                return location_query.ToList();
             }
-            return location_query.ToList();
+            catch (Exception ex)
+            {
+                throw new Exception("An error occurred while filtering the location.", ex);
+            }
         }
-       
+        //Filtering amenities
+        public IEnumerable<Hotel> FilterAmenities(string amenities)
+        {
+            try
+            {
+                var amenities_query = _CustomerContext.Hotels.Include(x => x.Rooms).AsQueryable();
+
+                if (!string.IsNullOrEmpty(amenities))
+                {
+                    amenities_query = amenities_query.Where(h => h.Amenities.Contains(amenities));
+                }
+                return amenities_query.ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("An error occurred while filtering the amenties.", ex);
+            }
+        }
+        // Filtering price range
+        public IEnumerable<Hotel> FilterPriceRange(decimal minPrice, decimal maxPrice)
+        {
+            try
+            {
+                var priceQuery = _CustomerContext.Hotels.Include(x => x.Rooms).AsQueryable();
+
+                if (minPrice > 0)
+                {
+                    priceQuery = priceQuery.Where(r => r.Price >= minPrice);
+                }
+
+                if (maxPrice > 0)
+                {
+                    priceQuery = priceQuery.Where(r => r.Price <= maxPrice);
+                }
+
+                return priceQuery.ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("An error occurred while filtering the price range.", ex);
+            }
+        }
+        //Check room availability
+        public int GetAvailableRoomCount(int hotel_Id)
+        {
+            try
+            {
+                return _CustomerContext.Rooms.Count(r => r.Hotel.Hotel_Id == hotel_Id && r.Room_Status == "available");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("An error occurred while retrieving the count of available rooms.", ex);
+            }
+        }
+
     }
 }
  

@@ -90,8 +90,8 @@ namespace Hotel_Booking_System.Migrations
                     b.Property<string>("Hotel_Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Price")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("Price")
+                        .HasColumnType("int");
 
                     b.HasKey("Hotel_Id");
 
