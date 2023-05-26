@@ -1,4 +1,9 @@
 using Hotel_Booking_System.Models;
+using Hotel_Booking_System.Repositories.Customer_Repositories;
+using Hotel_Booking_System.Repositories.Employee_Repositories;
+using Hotel_Booking_System.Repositories.Hotel_Repositories;
+using Hotel_Booking_System.Repositories.Room_Repositories;
+using Hotel_Booking_System.Repositories.User_Repoitories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -41,6 +46,11 @@ builder.Services.AddAuthentication(options =>
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Key"]))
     };
 });
+builder.Services.AddScoped<IHotel, Hotel_Repository>();
+builder.Services.AddScoped<IEmployee, Employee_Repository>();
+builder.Services.AddScoped<ICustomer, Customer_Repository>();
+builder.Services.AddScoped<IRoom, Room_Repository>();
+//builder.Services.AddScoped<IUser,User_Repository>();
 
 var app = builder.Build();
 
